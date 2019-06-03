@@ -2,5 +2,13 @@ spring:
   profiles:
     active: alpha
   redis:
-    host: 192.168.0.2
-    port: 6379
+    cluster:
+      nodes:
+        - 15.164.98.87:6300
+        - 15.164.98.87:6301
+        - 15.164.98.87:6302
+        - 15.164.98.87:6400
+        - 15.164.98.87:6401
+        - 15.164.98.87:6402
+      max-redirects: 3
+    password: 02cc9f8b3ff0eead714a76cc0ab94da4e3ea094a81838347b507648f5d8ec9bb

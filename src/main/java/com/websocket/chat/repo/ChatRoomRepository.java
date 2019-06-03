@@ -18,15 +18,15 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Repository
 public class ChatRoomRepository {
-    // topic에 발행되는 액션을 처리할 Listner
+    // 채팅방(topic)에 발행되는 액션을 처리할 Listner
     private final RedisMessageListenerContainer redisMessageListener;
-    // 구독자
+    // 구독 처리 서비스
     private final RedisSubscriber redisSubscriber;
     // Redis
+    private final String CHAT_ROOMS = "CHAT_ROOM";
     private final RedisTemplate<String, Object> redisTemplate;
     private HashOperations<String, String, ChatRoom> opsHashChatRoom;
-    private final String CHAT_ROOMS = "CHAT_ROOM";
-    // 서버별로 필요시 생성된다.
+    // 채팅방의 대화 메시지를 redis의 pub/sub를 통해 전달하기 위해 생성하는 topic 정보
     private Map<String, ChannelTopic> topics;
 
     @PostConstruct
@@ -44,13 +44,17 @@ public class ChatRoomRepository {
     }
 
     public ChatRoom createChatRoom(String name) {
+        // 채팅방을 생성하고, 서버간 공유를 위해 redis hash에 저장한다.
         ChatRoom chatRoom = ChatRoom.create(name);
         opsHashChatRoom.put(CHAT_ROOMS, chatRoom.getRoomId(), chatRoom);
-
-        ChannelTopic channel = new ChannelTopic(chatRoom.getRoomId());
-        redisMessageListener.addMessageListener(redisSubscriber, channel);
-        topics.put(chatRoom.getRoomId(), channel);
         return chatRoom;
+    }
+
+    public void enterChatRoom(String roomId) {
+        // redis에 topic과 pub/sub 통신을 하기 위한 설정
+        ChannelTopic topic = new ChannelTopic(roomId);
+        redisMessageListener.addMessageListener(redisSubscriber, topic);
+        topics.put(roomId, topic);
     }
 
     public ChannelTopic getTopic(String roomId) {
