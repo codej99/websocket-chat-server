@@ -23,7 +23,7 @@
             <div class="input-group-prepend">
                 <label class="input-group-text">내용</label>
             </div>
-            <input type="text" class="form-control" v-model="message" @keyup.enter="sendMessage">
+            <input type="text" class="form-control" v-model="message" v-on:keyup.enter="sendMessage">
             <div class="input-group-append">
                 <button class="btn btn-primary" type="button" @click="sendMessage">보내기</button>
             </div>

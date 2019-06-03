@@ -23,7 +23,7 @@
             <div class="input-group-prepend">
                 <label class="input-group-text">방제목</label>
             </div>
-            <input type="text" class="form-control" v-model="room_name" @keyup.enter="createRoom">
+            <input type="text" class="form-control" v-model="room_name" v-on:keyup.enter="createRoom">
             <div class="input-group-append">
                 <button class="btn btn-primary" type="button" @click="createRoom">채팅방 개설</button>
             </div>
