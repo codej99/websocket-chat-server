@@ -11,4 +11,4 @@ spring:
         - 15.164.98.87:6401
         - 15.164.98.87:6402
       max-redirects: 3
-    password: 02cc9f8b3ff0eead714a76cc0ab94da4e3ea094a81838347b507648f5d8ec9bb
+    password: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
