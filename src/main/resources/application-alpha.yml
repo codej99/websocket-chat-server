@@ -1,14 +1,6 @@
 spring:
   profiles:
-    active: alpha
+    active: local
   redis:
-    cluster:
-      nodes:
-        - 15.164.98.87:6300
-        - 15.164.98.87:6301
-        - 15.164.98.87:6302
-        - 15.164.98.87:6400
-        - 15.164.98.87:6401
-        - 15.164.98.87:6402
-      max-redirects: 3
-    password: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    host: Standalone Redis 호스트
+    port: Standalone Redis 포트
