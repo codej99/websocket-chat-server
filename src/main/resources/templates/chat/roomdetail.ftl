@@ -84,9 +84,9 @@
                 });
                 ws.send("/pub/chat/message", {}, JSON.stringify({type:'ENTER', roomId:vm.$data.roomId, sender:vm.$data.sender}));
             }, function(error) {
-                if(reconnect++ <= 5) {
+                if(reconnect++ < 5) {
                     setTimeout(function() {
-                        console.log("connection reconnect");
+                        // console.log("connection reconnect");
                         sock = new SockJS("/ws-stomp");
                         ws = Stomp.over(sock);
                         connect();
