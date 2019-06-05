@@ -38,7 +38,6 @@
     <!-- JavaScript -->
     <script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>
     <script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
-    <script src="/webjars/bootstrap/4.3.1/dist/js/bootstrap.min.js"></script>
     <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
     <script>
@@ -46,6 +45,7 @@
         // websocket & stomp initialize
         var sock = new SockJS("/ws-stomp");
         var ws = Stomp.over(sock);
+        var reconnect = 0;
         // vue.js
         var vm = new Vue({
             el: '#app',
@@ -84,13 +84,14 @@
                 });
                 ws.send("/pub/chat/message", {}, JSON.stringify({type:'ENTER', roomId:vm.$data.roomId, sender:vm.$data.sender}));
             }, function(error) {
-                console.log("error connection disconnected");
-                setTimeout(function() {
-                    console.log("connection reconnect");
-                    sock = new SockJS("/ws-stomp");
-                    ws = Stomp.over(sock);
-                    connect();
-                },10*1000);
+                if(reconnect++ <= 5) {
+                    setTimeout(function() {
+                        console.log("connection reconnect");
+                        sock = new SockJS("/ws-stomp");
+                        ws = Stomp.over(sock);
+                        connect();
+                    },10*1000);
+                }
             });
         }
         connect();
