@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: local
+  redis:
+    host: Standalone Redis 호스트
+    port: Standalone Redis 포트
