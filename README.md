@@ -26,7 +26,7 @@
     - Git
         - https://github.com/codej99/websocket-chat-server/tree/feature/stomp
         
-- Spring websocket chatting server(3) – Redis pub/sub를 이용한 채팅서버 구현
+- Spring websocket chatting server(3) - 여러대의 채팅서버간에 메시지 공유하기 by Redis pub/sub
     - Document
         - https://daddyprogrammer.org/post/4731/spring-websocket-chatting-server-redis-pub-sub/
     - Git
