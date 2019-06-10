@@ -9,6 +9,8 @@ spring:
     add-properties: false
   freemarker:
     cache: false
+  jwt:
+    secret: govlepel@$&
 #logging:
 #  level:
 #    web: DEBUG
