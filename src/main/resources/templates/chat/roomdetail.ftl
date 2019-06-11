@@ -54,11 +54,13 @@
                 room: {},
                 sender: '',
                 message: '',
-                messages: []
+                messages: [],
+                token: ''
             },
             created() {
                 this.roomId = localStorage.getItem('wschat.roomId');
                 this.sender = localStorage.getItem('wschat.sender');
+                this.token = localStorage.getItem('wschat.token');
                 this.findRoom();
             },
             methods: {
@@ -66,7 +68,7 @@
                     axios.get('/chat/room/'+this.roomId).then(response => { this.room = response.data; });
                 },
                 sendMessage: function() {
-                    ws.send("/pub/chat/message", {}, JSON.stringify({type:'TALK', roomId:this.roomId, sender:this.sender, message:this.message}));
+                    ws.send("/pub/chat/message", {"token":this.token}, JSON.stringify({type:'TALK', roomId:this.roomId, sender:this.sender, message:this.message}));
                     this.message = '';
                 },
                 recvMessage: function(recv) {
@@ -77,21 +79,15 @@
 
         function connect() {
             // pub/sub event
-            ws.connect({"token":"token-authentication!!!"}, function(frame) {
+            ws.connect({"token":vm.$data.token}, function(frame) {
                 ws.subscribe("/sub/chat/room/"+vm.$data.roomId, function(message) {
                     var recv = JSON.parse(message.body);
                     vm.recvMessage(recv);
                 });
-                ws.send("/pub/chat/message", {}, JSON.stringify({type:'ENTER', roomId:vm.$data.roomId, sender:vm.$data.sender}));
+                //ws.send("/pub/chat/message", {"token":vm.$data.token}, JSON.stringify({type:'ENTER', roomId:vm.$data.roomId, sender:vm.$data.sender}));
             }, function(error) {
-                if(reconnect++ < 5) {
-                    setTimeout(function() {
-                        // console.log("connection reconnect");
-                        sock = new SockJS("/ws-stomp");
-                        ws = Stomp.over(sock);
-                        connect();
-                    },10*1000);
-                }
+                alert("서버 연결에 실패하였습니다.");
+                location.href="/chat/room";
             });
         }
         connect();

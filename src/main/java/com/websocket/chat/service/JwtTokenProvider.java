@@ -19,9 +19,8 @@ public class JwtTokenProvider {
 
     private long tokenValidMilisecond = 1000L * 60 * 60; // 1시간만 토큰 유효
 
-    public String generateToken(String userId, String nickname) {
-        Claims claims = Jwts.claims().setId(userId);
-        claims.put("nickname", nickname);
+    public String generateToken(String nickname) {
+        Claims claims = Jwts.claims().setId(nickname);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) // 데이터
@@ -36,6 +35,6 @@ public class JwtTokenProvider {
         if (claims.getBody().getExpiration().before(new Date())) // jwt 유효시간 체크
             return null;
 
-        return claims.getBody().get("nickname", String.class);
+        return claims.getBody().getId();
     }
 }
