@@ -1,6 +1,7 @@
 package com.websocket.chat.config.handler;
 
 import com.websocket.chat.service.JwtTokenProvider;
+import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
@@ -8,10 +9,7 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
-import org.springframework.util.StringUtils;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,53 +20,17 @@ public class StompHandler implements ChannelInterceptor {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-//        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
-//        if (StompCommand.CONNECT == accessor.getCommand()) {
-//            String jwt = accessor.getFirstNativeHeader("token");
-//            log.info("Authorization {}", jwt);
-//            String nickname = "";
-//            if (StringUtils.hasText(jwt)) {
-//                try {
-//                    nickname = jwtTokenProvider.validateToken(jwt);
-//                } catch(Exception e) {
-//
-//                    //final StompHeaderAccessor accessor = StompHeaderAccessor.create(accessor.getCommand());
-//                    accessor.setSessionId(accessor.getSessionId());
-//                    @SuppressWarnings("unchecked")
-//                    final MultiValueMap<String, String> nativeHeaders = (MultiValueMap<String, String>) accessor.getHeader(StompHeaderAccessor.NATIVE_HEADERS);
-//                    accessor.addNativeHeaders(nativeHeaders);
-//
-//                    // add custom headers
-//                    accessor.addNativeHeader("CUSTOM01", "CUSTOM01");
-//
-//                    final Message<?> newMessage = MessageBuilder.createMessage(new byte[0], accessor.getMessageHeaders());
-//                    return newMessage;
-//                }
+        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
+        if (StompCommand.CONNECT == accessor.getCommand()) {
+            String jwt = accessor.getFirstNativeHeader("token");
+//            try {
+            jwtTokenProvider.validateToken(jwt);
+//            } catch (Exception e) {
+//                throw new JwtException("Invalid Jwt");
 //            }
-//        }
-//        return message;
-
-        //////////////////////////
-
-//        log.info("Outbound channel pre send ...");
-//        final StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(message);
-//        final StompCommand command = headerAccessor.getCommand();
-//        if (command != null) {
-//            switch (command) {
-//                case CONNECT:
-//                    final StompHeaderAccessor accessor = StompHeaderAccessor.create(headerAccessor.getCommand());
-//                    accessor.setSessionId(headerAccessor.getSessionId());
-//                    @SuppressWarnings("unchecked")
-//                    final MultiValueMap<String, String> nativeHeaders = (MultiValueMap<String, String>) headerAccessor.getHeader(StompHeaderAccessor.NATIVE_HEADERS);
-//                    accessor.addNativeHeaders(nativeHeaders);
-//
-//                    // add custom headers
-//                    accessor.addNativeHeader("CUSTOM01", "CUSTOM01");
-//
-//                    return MessageBuilder.createMessage(new byte[0], accessor.getMessageHeaders());
-//                default:
-//                    break;
-//            }
+        }
+//        } else if(StompCommand.SUBSCRIBE == accessor.getCommand()) {
+//            log.info("Subscribe >>>>>>>>>>>>> {}", message.toString());
 //        }
         return message;
     }
