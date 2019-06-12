@@ -1,9 +1,12 @@
 package com.websocket.chat.controller;
 
 import com.websocket.chat.model.ChatRoom;
+import com.websocket.chat.model.LoginInfo;
 import com.websocket.chat.repo.ChatRoomRepository;
 import com.websocket.chat.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +23,7 @@ public class ChatRoomController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/room")
-    public String rooms(Model model) {
+    public String rooms() {
         return "/chat/room";
     }
 
@@ -48,9 +51,11 @@ public class ChatRoomController {
         return chatRoomRepository.findRoomById(roomId);
     }
 
-    @GetMapping("/token")
+    @GetMapping("/user")
     @ResponseBody
-    public String createToken(@RequestParam String name) {
-        return jwtTokenProvider.generateToken(name);
+    public LoginInfo getUserInfo() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        return LoginInfo.builder().name(name).token(jwtTokenProvider.generateToken(name)).build();
     }
 }

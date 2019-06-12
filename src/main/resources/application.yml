@@ -11,6 +11,3 @@ spring:
     cache: false
   jwt:
     secret: govlepel@$&
-#logging:
-#  level:
-#    web: DEBUG

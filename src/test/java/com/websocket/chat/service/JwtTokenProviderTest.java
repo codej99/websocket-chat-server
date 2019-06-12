@@ -20,9 +20,9 @@ public class JwtTokenProviderTest {
     public void createAndValidToken() {
         String userId = "happy";
         String nickname = "아이유";
-        String jwt = jwtTokenProvider.generateToken(userId, nickname);
+        String jwt = jwtTokenProvider.generateToken(nickname);
         assertNotNull(jwt);
-        String decToken = jwtTokenProvider.validateToken(jwt);
+        String decToken = jwtTokenProvider.getUserNameFromJwt(jwt);
         assertEquals(nickname, decToken);
     }
 }

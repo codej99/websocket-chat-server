@@ -17,7 +17,7 @@
   <body>
     <div class="container" id="app" v-cloak>
         <div>
-            <h2>{{room.name}}</h2>
+            <h2>{{roomName}}</h2>
         </div>
         <div class="input-group">
             <div class="input-group-prepend">
@@ -33,7 +33,6 @@
                 {{message.sender}} - {{message.message}}</a>
             </li>
         </ul>
-        <div></div>
     </div>
     <!-- JavaScript -->
     <script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>
@@ -50,7 +49,7 @@
             el: '#app',
             data: {
                 roomId: '',
-                room: {},
+                roomName: '',
                 sender: '',
                 message: '',
                 messages: [],
@@ -58,13 +57,25 @@
             },
             created() {
                 this.roomId = localStorage.getItem('wschat.roomId');
-                this.sender = localStorage.getItem('wschat.sender');
-                this.token = localStorage.getItem('wschat.token');
-                this.findRoom();
+                this.roomName = localStorage.getItem('wschat.roomName');
+                const that = this;
+                this.getUser().then(function () {
+                    that.connect();
+                });
             },
             methods: {
-                findRoom: function() {
-                    axios.get('/chat/room/'+this.roomId).then(response => { this.room = response.data; });
+                connect: function() {
+                    const that = this;
+                    ws.connect({"token":this.token}, function(frame) {
+                        ws.subscribe("/sub/chat/room/"+that.roomId, function(message) {
+                            var recv = JSON.parse(message.body);
+                            that.recvMessage(recv);
+                        });
+                        ws.send("/pub/chat/message", {"token":that.token}, JSON.stringify({type:'ENTER', roomId:that.roomId, sender:that.sender}));
+                    }, function(error) {
+                        alert("서버 연결에 실패하였습니다.");
+                        location.href="/chat/room";
+                    });
                 },
                 sendMessage: function() {
                     ws.send("/pub/chat/message", {"token":this.token}, JSON.stringify({type:'TALK', roomId:this.roomId, sender:this.sender, message:this.message}));
@@ -72,24 +83,19 @@
                 },
                 recvMessage: function(recv) {
                     this.messages.unshift({"type":recv.type,"sender":recv.type=='ENTER'?'[알림]':recv.sender,"message":recv.message})
+                },
+                getUser: function() {
+                    const that = this;
+                    return new Promise(function (resolve, reject) {
+                        axios.get('/chat/user').then(response => {
+                            that.sender = response.data.name;
+                            that.token = response.data.token;
+                            resolve();
+                        });
+                    });
                 }
             }
         });
-
-        function connect() {
-            // pub/sub event
-            ws.connect({"token":vm.$data.token}, function(frame) {
-                ws.subscribe("/sub/chat/room/"+vm.$data.roomId, function(message) {
-                    var recv = JSON.parse(message.body);
-                    vm.recvMessage(recv);
-                });
-                ws.send("/pub/chat/message", {"token":vm.$data.token}, JSON.stringify({type:'ENTER', roomId:vm.$data.roomId, sender:vm.$data.sender}));
-            }, function(error) {
-                alert("서버 연결에 실패하였습니다.");
-                location.href="/chat/room";
-            });
-        }
-        connect();
     </script>
   </body>
 </html>
