@@ -41,7 +41,6 @@
     <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
     <script>
-        //alert(document.title);
         // websocket & stomp initialize
         var sock = new SockJS("/ws-stomp");
         var ws = Stomp.over(sock);
@@ -84,7 +83,7 @@
                     var recv = JSON.parse(message.body);
                     vm.recvMessage(recv);
                 });
-                //ws.send("/pub/chat/message", {"token":vm.$data.token}, JSON.stringify({type:'ENTER', roomId:vm.$data.roomId, sender:vm.$data.sender}));
+                ws.send("/pub/chat/message", {"token":vm.$data.token}, JSON.stringify({type:'ENTER', roomId:vm.$data.roomId, sender:vm.$data.sender}));
             }, function(error) {
                 alert("서버 연결에 실패하였습니다.");
                 location.href="/chat/room";

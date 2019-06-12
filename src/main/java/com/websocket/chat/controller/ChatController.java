@@ -6,10 +6,8 @@ import com.websocket.chat.repo.ChatRoomRepository;
 import com.websocket.chat.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 
 @Slf4j
@@ -27,7 +25,6 @@ public class ChatController {
     @MessageMapping("/chat/message")
     public void message(ChatMessage message, @Header("token") String token) {
         String nickname = jwtTokenProvider.validateToken(token);
-        log.error("validateToken >>>>>>>>>>>>> {}", nickname);
 
         if (ChatMessage.MessageType.ENTER.equals(message.getType())) {
             chatRoomRepository.enterChatRoom(message.getRoomId());
@@ -36,15 +33,4 @@ public class ChatController {
         // Websocket에 발행된 메시지를 redis로 발행한다(publish)
         redisPublisher.publish(chatRoomRepository.getTopic(message.getRoomId()), message);
     }
-
-    @SubscribeMapping("/chat/room")
-    public void subscribe() {
-        log.info("Subscribe >>>>>>>>>>>>>>>>>>>>> 1");
-    }
-
-    @SubscribeMapping("/chat/room/{roomId}")
-    public void subscribe2(@DestinationVariable String roomId) {
-        log.info("Subscribe ############### 2 {}", roomId);
-    }
-
 }
