@@ -25,7 +25,7 @@ public class ChatController {
     @MessageMapping("/chat/message")
     public void message(ChatMessage message, @Header("token") String token) {
         String nickname = jwtTokenProvider.getUserNameFromJwt(token);
-
+        message.setSender(nickname);
         if (ChatMessage.MessageType.ENTER.equals(message.getType())) {
             chatRoomRepository.enterChatRoom(message.getRoomId());
             message.setMessage(nickname + "님이 입장하셨습니다.");

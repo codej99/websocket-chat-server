@@ -17,8 +17,7 @@ import org.springframework.stereotype.Component;
 public class StompHandler implements ChannelInterceptor {
 
     private final JwtTokenProvider jwtTokenProvider;
-
-    //private final ChatRoomRepository chatRoomRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
     // websocket을 통해 들어온 요청이 처리 되기전 실행된다.
     @Override
@@ -27,12 +26,6 @@ public class StompHandler implements ChannelInterceptor {
         // websocket 연결시 헤더의 jwt token 검증
         if (StompCommand.CONNECT == accessor.getCommand()) {
             jwtTokenProvider.validateToken(accessor.getFirstNativeHeader("token"));
-        } else if (StompCommand.SUBSCRIBE == accessor.getCommand()) {
-            String dest = message.getHeaders().get("simpDestination").toString();
-            String[] arr = dest.split("/");
-            if (arr.length == 4) {
-                //chatRoomRepository.enterChatRoom(arr[3]);
-            }
         }
         return message;
     }
