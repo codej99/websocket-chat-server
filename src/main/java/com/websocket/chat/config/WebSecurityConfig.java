@@ -21,7 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin() // 권한없이 페이지 접근하면 로그인 페이지로 이동한다.
                 .and()
                 .authorizeRequests()
-                .anyRequest().hasRole("USER"); // 모든 웹페이지 접근시 User 권한이 필요하다.
+                    .antMatchers("/chat/**").access("hasRole('USER') or hasRole('ADMIN')")
+                .anyRequest().permitAll();
     }
 
     /**
@@ -39,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .password("{noop}1234")
                 .roles("USER")
                 .and()
-                .withUser("guest")
+                .withUser("admin")
                 .password("{noop}1234")
                 .roles("ADMIN");
     }

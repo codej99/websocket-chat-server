@@ -19,7 +19,7 @@
                 <h3>채팅방 리스트</h3>
             </div>
             <div class="col-md-6 text-right">
-                <a class="btn btn-primary" href="/logout">로그아웃</a>
+                <a class="btn btn-primary btn-sm" href="/logout">로그아웃</a>
             </div>
         </div>
         <div class="input-group">

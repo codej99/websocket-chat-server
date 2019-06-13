@@ -16,8 +16,13 @@
   </head>
   <body>
     <div class="container" id="app" v-cloak>
-        <div>
-            <h2>{{roomName}}</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>{{roomName}}</h3>
+            </div>
+            <div class="col-md-6 text-right">
+                <a class="btn btn-primary btn-sm" href="/logout">로그아웃</a>
+            </div>
         </div>
         <div class="input-group">
             <div class="input-group-prepend">
