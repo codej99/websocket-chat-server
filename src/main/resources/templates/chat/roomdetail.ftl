@@ -76,11 +76,14 @@
                             var recv = JSON.parse(message.body);
                             that.recvMessage(recv);
                         });
+
                         ws.send("/pub/chat/message", {"token":that.token}, JSON.stringify({type:'ENTER', roomId:that.roomId, sender:that.sender}));
                     }, function(error) {
                         alert("서버 연결에 실패하였습니다.");
                         location.href="/chat/room";
                     });
+
+
                 },
                 sendMessage: function() {
                     ws.send("/pub/chat/message", {"token":this.token}, JSON.stringify({type:'TALK', roomId:this.roomId, sender:this.sender, message:this.message}));
