@@ -1,6 +1,5 @@
 package com.websocket.chat.config.handler;
 
-import com.websocket.chat.repo.ChatRoomRepository;
 import com.websocket.chat.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component;
 public class StompHandler implements ChannelInterceptor {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final ChatRoomRepository chatRoomRepository;
 
     // websocket을 통해 들어온 요청이 처리 되기전 실행된다.
     @Override
@@ -29,7 +27,6 @@ public class StompHandler implements ChannelInterceptor {
         }
         return message;
     }
-
 
     // websocket을 통해 들어온 요청이 처리된 후에 실행된다.
     @Override

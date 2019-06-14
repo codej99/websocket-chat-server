@@ -62,7 +62,7 @@
             created() {
                 this.roomId = localStorage.getItem('wschat.roomId');
                 this.roomName = localStorage.getItem('wschat.roomName');
-                const _this = this;
+                var _this = this;
                 axios.get('/chat/user').then(response => {
                     _this.token = response.data.token;
                     ws.connect({"token":_this.token}, function(frame) {
@@ -71,7 +71,7 @@
                             _this.recvMessage(recv);
                         });
 
-                        ws.send("/pub/chat/message", {"token":_this.token}, JSON.stringify({type:'ENTER', roomId:_this.roomId}));
+                        _this.sendMessage('ENTER');
                     }, function(error) {
                         alert("서버 연결에 실패하였습니다.");
                         location.href="/chat/room";
@@ -79,8 +79,9 @@
                 });
             },
             methods: {
-                sendMessage: function() {
-                    ws.send("/pub/chat/message", {"token":this.token}, JSON.stringify({type:'TALK', roomId:this.roomId, message:this.message}));
+                sendMessage: function(type) {
+                    type = typeof type !== 'undefined' ? type : 'TALK';
+                    ws.send("/pub/chat/message", {"token":this.token}, JSON.stringify({type:type, roomId:this.roomId, message:this.message}));
                     this.message = '';
                 },
                 recvMessage: function(recv) {
