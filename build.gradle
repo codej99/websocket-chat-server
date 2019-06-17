@@ -20,7 +20,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.security:spring-security-messaging'
+//    implementation 'org.springframework.security:spring-security-messaging'
     //embedded-redis
     implementation 'it.ozimov:embedded-redis:0.7.2'
     implementation 'org.webjars.bower:bootstrap:4.3.1'

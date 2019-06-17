@@ -27,9 +27,4 @@ public class StompHandler implements ChannelInterceptor {
         }
         return message;
     }
-
-    // websocket을 통해 들어온 요청이 처리된 후에 실행된다.
-    @Override
-    public void postSend(Message message, MessageChannel channel, boolean sent) {
-    }
 }

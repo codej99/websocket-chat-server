@@ -28,9 +28,9 @@
             <div class="input-group-prepend">
                 <label class="input-group-text">내용</label>
             </div>
-            <input type="text" class="form-control" v-model="message" v-on:keypress.enter="sendMessage">
+            <input type="text" class="form-control" v-model="message" v-on:keypress.enter="sendMessage('TALK')">
             <div class="input-group-append">
-                <button class="btn btn-primary" type="button" @click="sendMessage">보내기</button>
+                <button class="btn btn-primary" type="button" @click="sendMessage('TALK')">보내기</button>
             </div>
         </div>
         <ul class="list-group">
@@ -70,22 +70,20 @@
                             var recv = JSON.parse(message.body);
                             _this.recvMessage(recv);
                         });
-
                         _this.sendMessage('ENTER');
                     }, function(error) {
-                        alert("서버 연결에 실패하였습니다.");
+                        alert("서버 연결에 실패 하였습니다. 다시 접속해 주십시요.");
                         location.href="/chat/room";
                     });
                 });
             },
             methods: {
                 sendMessage: function(type) {
-                    type = typeof type !== 'undefined' ? type : 'TALK';
-                    ws.send("/pub/chat/message", {"token":this.token}, JSON.stringify({type:type, roomId:this.roomId, message:this.message}));
+                    ws.send("/pub/chat/message", {}, JSON.stringify({type:type, roomId:this.roomId, message:this.message}));
                     this.message = '';
                 },
                 recvMessage: function(recv) {
-                    this.messages.unshift({"type":recv.type,"sender":recv.type=='ENTER'?'[알림]':recv.sender,"message":recv.message})
+                    this.messages.unshift({"type":recv.type,"sender":recv.sender,"message":recv.message})
                 }
             }
         });
