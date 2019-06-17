@@ -31,6 +31,12 @@
         - https://daddyprogrammer.org/post/4731/spring-websocket-chatting-server-redis-pub-sub/
     - Git
         - https://github.com/codej99/websocket-chat-server/tree/feature/redis-pub-sub
+        
+- Spring websocket chatting server(4) - SpringSecurity + Jwt를 적용하여 보안강화하기
+    - Document
+        - https://daddyprogrammer.org/post/5072/spring-websocket-chatting-server-spring-security-jwt/
+    - Git
+        - https://github.com/codej99/websocket-chat-server/tree/feature/security
 
 ### 3. 기타
 - Websocket Client
@@ -40,3 +46,9 @@
 - 채팅룸 화면 접속
     - 실습2,3에서 구현하는 채팅 웹뷰 접속 주소
     - http://localhost:8080/chat/room
+- SpringSecurity 아이디/비번
+    - 실습4에서 사용
+    - http://localhost:8080/chat/room
+    - happydaddy/1234 : ROLE_USER 
+    - angrydaddy/1234 : ROLE_USER 
+    - guest/1234 : ROLE_GUEST 
