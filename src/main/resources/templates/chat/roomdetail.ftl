@@ -79,7 +79,7 @@
             },
             methods: {
                 sendMessage: function(type) {
-                    ws.send("/pub/chat/message", {}, JSON.stringify({type:type, roomId:this.roomId, message:this.message}));
+                    ws.send("/pub/chat/message", {"token":this.token}, JSON.stringify({type:type, roomId:this.roomId, message:this.message}));
                     this.message = '';
                 },
                 recvMessage: function(recv) {
