@@ -18,7 +18,7 @@
     <div class="container" id="app" v-cloak>
         <div class="row">
             <div class="col-md-6">
-                <h3>{{roomName}}</h3>
+                <h3>{{roomName}} - {{userCount}}</h3>
             </div>
             <div class="col-md-6 text-right">
                 <a class="btn btn-primary btn-sm" href="/logout">로그아웃</a>
@@ -48,7 +48,6 @@
         // websocket & stomp initialize
         var sock = new SockJS("/ws-stomp");
         var ws = Stomp.over(sock);
-        var reconnect = 0;
         // vue.js
         var vm = new Vue({
             el: '#app',
@@ -57,7 +56,8 @@
                 roomName: '',
                 message: '',
                 messages: [],
-                token: ''
+                token: '',
+                userCount: 0
             },
             created() {
                 this.roomId = localStorage.getItem('wschat.roomId');
@@ -83,6 +83,7 @@
                     this.message = '';
                 },
                 recvMessage: function(recv) {
+                    this.userCount = recv.userCount;
                     this.messages.unshift({"type":recv.type,"sender":recv.sender,"message":recv.message})
                 }
             }

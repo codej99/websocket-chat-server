@@ -38,11 +38,7 @@ public class ChatController {
         String nickname = jwtTokenProvider.getUserNameFromJwt(token);
         // 로그인 회원 정보로 대화명 설정
         message.setSender(nickname);
-        // 채팅방 입장/퇴장시에는 대화명과 메시지를 자동으로 세팅한다.
-//        if (ChatMessage.MessageType.ENTER.equals(message.getType())) {
-//            message.setSender("[알림]");
-//            message.setMessage(nickname + "님이 방에 입장했습니다.");
-//        }
+
         // 채팅방 인원수 조회
         Long userCnt = Long.valueOf((String) valueOps.get(ChatRoom.USER_COUNT + message.getRoomId()));
         message.setUserCount(userCnt);
