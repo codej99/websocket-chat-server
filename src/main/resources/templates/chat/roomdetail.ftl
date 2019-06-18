@@ -70,7 +70,7 @@
                             var recv = JSON.parse(message.body);
                             _this.recvMessage(recv);
                         });
-                        _this.sendMessage('ENTER');
+                        //_this.sendMessage('ENTER');
                     }, function(error) {
                         alert("서버 연결에 실패 하였습니다. 다시 접속해 주십시요.");
                         location.href="/chat/room";
