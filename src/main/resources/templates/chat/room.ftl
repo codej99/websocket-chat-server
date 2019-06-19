@@ -33,7 +33,7 @@
         </div>
         <ul class="list-group">
             <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.roomId" v-on:click="enterRoom(item.roomId, item.name)">
-                {{item.name}}
+                {{item.name}} ({{item.userCount}})
             </li>
         </ul>
     </div>

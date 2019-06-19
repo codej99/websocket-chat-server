@@ -13,17 +13,17 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
 @Controller
 public class ChatController {
 
-    private final RedisTemplate redisTemplate;
     private final JwtTokenProvider jwtTokenProvider;
     private final ChannelTopic channelTopic;
-
-    private ValueOperations valueOps;
+    private final RedisTemplate redisTemplate;
+    private ValueOperations<String, String> valueOps;
 
     @PostConstruct
     private void init() {
@@ -38,10 +38,8 @@ public class ChatController {
         String nickname = jwtTokenProvider.getUserNameFromJwt(token);
         // 로그인 회원 정보로 대화명 설정
         message.setSender(nickname);
-
-        // 채팅방 인원수 조회
-        Long userCnt = Long.valueOf((String) valueOps.get(ChatRoom.USER_COUNT + message.getRoomId()));
-        message.setUserCount(userCnt);
+        // 채팅방 인원수 세팅
+        message.setUserCount(Long.valueOf(Optional.ofNullable(valueOps.get(ChatRoom.USER_COUNT + message.getRoomId())).orElse("0")));
         // Websocket에 발행된 메시지를 redis로 발행(publish)
         redisTemplate.convertAndSend(channelTopic.getTopic(), message);
     }
