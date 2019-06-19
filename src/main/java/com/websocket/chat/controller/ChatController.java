@@ -1,19 +1,16 @@
 package com.websocket.chat.controller;
 
 import com.websocket.chat.model.ChatMessage;
-import com.websocket.chat.model.ChatRoom;
+import com.websocket.chat.repo.ChatRoomRepository;
+import com.websocket.chat.service.ChatService;
 import com.websocket.chat.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
-
-import javax.annotation.PostConstruct;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,13 +19,9 @@ public class ChatController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final ChannelTopic channelTopic;
+    private final ChatRoomRepository chatRoomRepository;
     private final RedisTemplate redisTemplate;
-    private ValueOperations<String, String> valueOps;
-
-    @PostConstruct
-    private void init() {
-        valueOps = redisTemplate.opsForValue();
-    }
+    private final ChatService chatService;
 
     /**
      * websocket "/pub/chat/message"로 들어오는 메시징을 처리한다.
@@ -39,8 +32,8 @@ public class ChatController {
         // 로그인 회원 정보로 대화명 설정
         message.setSender(nickname);
         // 채팅방 인원수 세팅
-        message.setUserCount(Long.valueOf(Optional.ofNullable(valueOps.get(ChatRoom.USER_COUNT + message.getRoomId())).orElse("0")));
+        message.setUserCount(chatRoomRepository.getUserCount(message.getRoomId()));
         // Websocket에 발행된 메시지를 redis로 발행(publish)
-        redisTemplate.convertAndSend(channelTopic.getTopic(), message);
+        chatService.sendChatMessage(message);
     }
 }
