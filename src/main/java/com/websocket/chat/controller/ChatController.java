@@ -6,8 +6,6 @@ import com.websocket.chat.service.ChatService;
 import com.websocket.chat.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
@@ -18,9 +16,7 @@ import org.springframework.stereotype.Controller;
 public class ChatController {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final ChannelTopic channelTopic;
     private final ChatRoomRepository chatRoomRepository;
-    private final RedisTemplate redisTemplate;
     private final ChatService chatService;
 
     /**

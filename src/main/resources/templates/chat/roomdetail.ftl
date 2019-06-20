@@ -18,7 +18,7 @@
     <div class="container" id="app" v-cloak>
         <div class="row">
             <div class="col-md-6">
-                <h3>{{roomName}}( 참여자수 - {{userCount}} )</h3>
+                <h4>{{roomName}} <span class="badge badge-info badge-pill">{{userCount}}</span></h4>
             </div>
             <div class="col-md-6 text-right">
                 <a class="btn btn-primary btn-sm" href="/logout">로그아웃</a>
