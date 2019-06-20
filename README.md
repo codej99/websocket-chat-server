@@ -37,6 +37,12 @@
         - https://daddyprogrammer.org/post/5072/spring-websocket-chatting-server-spring-security-jwt/
     - Git
         - https://github.com/codej99/websocket-chat-server/tree/feature/security
+        
+- Spring websocket chatting server(5) – 채팅방 입장/퇴장 이벤트 처리, 인원수 표시
+    - Document
+        - https://daddyprogrammer.org/post/5290/spring-websocket-chatting-server-enter-qut-event-view-user-count/
+    - Git
+        - https://github.com/codej99/websocket-chat-server/tree/feature/developchatroom
 
 ### 3. 기타
 - Websocket Client
