@@ -54,8 +54,9 @@
             methods: {
                 findAllRoom: function() {
                     axios.get('/chat/rooms').then(response = > {
-                        console.log(Object.prototype.toString.call(response.data));
-                    //if(Object.prototype.toString.call(response.data) === "[object JSON]")
+                        // prevent html, allow json array
+                        if(Object.prototype.toString.call(response.data) === "[object Array]"
+                )
                     this.chatrooms = response.data;
                 })
                     ;
