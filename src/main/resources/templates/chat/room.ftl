@@ -53,13 +53,11 @@
             },
             methods: {
                 findAllRoom: function() {
-                    axios.get('/chat/rooms').then(response = > {
+                    axios.get('/chat/rooms').then(response => {
                         // prevent html, allow json array
-                        if(Object.prototype.toString.call(response.data) === "[object Array]"
-                )
-                    this.chatrooms = response.data;
-                })
-                    ;
+                        if(Object.prototype.toString.call(response.data) === "[object Array]")
+                            this.chatrooms = response.data;
+                    });
                 },
                 createRoom: function() {
                     if("" === this.room_name) {
