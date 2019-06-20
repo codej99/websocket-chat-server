@@ -47,12 +47,7 @@
     <script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
     <script>
         // websocket & stomp initialize
-        var sock;
-        if (document.location.protocol == 'https:') {
-            sock = new SockJS("wss://chat.daddyprogrammer.org/ws-stomp");
-        } else {
-            sock = new SockJS("/ws-stomp");
-        }
+        var sock = new SockJS("/ws-stomp");
         var ws = Stomp.over(sock);
         // vue.js
         var vm = new Vue({
