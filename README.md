@@ -43,6 +43,9 @@
         - https://daddyprogrammer.org/post/5290/spring-websocket-chatting-server-enter-qut-event-view-user-count/
     - Git
         - https://github.com/codej99/websocket-chat-server/tree/feature/developchatroom
+- Spring websocket chatting server(6) – Nginx+Certbot 무료 SSL인증서로 WSS(Websocket Secure) 구축하기
+    - Document
+        - https://daddyprogrammer.org/post/5353/spring-websocket-chatting-server-ngix-certbot-ssl-websocket-secure/
 
 ### 3. 기타
 - Websocket Client
