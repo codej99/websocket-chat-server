@@ -4,7 +4,7 @@
 ![Spring_Security](https://img.shields.io/badge/Spring_Cloud_Security-v2.1.5-green.svg?logo=spring)
 ![Spring_Freemarker](https://img.shields.io/badge/Freemarker-v2.1.5-blue.svg)
 ![Vuejs](https://img.shields.io/badge/vue.js-v2.5.16-blue.svg?logo=vue.js)
-![GitHub stars](https://img.shields.io/github/stars/codej99/SpringOauth2AuthorizationServer?style=social)
+![GitHub stars](https://img.shields.io/github/stars/codej99/websocket-chat-server?style=social)
 
 # SpringBoot + Websocket을 이용한 채팅 서버 구축 
 
