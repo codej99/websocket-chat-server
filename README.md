@@ -1,9 +1,9 @@
 ![Java_8](https://img.shields.io/badge/java-v1.8-red?logo=java)
-![Spring_Boot](https://img.shields.io/badge/Spring_Boot-2.1.5-green.svg?logo=spring)
-![Spring_Boot_Websocket](https://img.shields.io/badge/Spring_Boot_Websocket-2.1.5-green.svg?logo=spring)
-![Spring_Security](https://img.shields.io/badge/Spring_Cloud_Security-2.1.5-green.svg?logo=spring)
-![Spring_Freemarker](https://img.shields.io/badge/Freemarker-2.1.5-blue.svg)
-![Vuejs](https://img.shields.io/badge/vue.js-2.5.16-blue.svg?logo=vue.js)
+![Spring_Boot](https://img.shields.io/badge/Spring_Boot-v2.1.5-green.svg?logo=spring)
+![Spring_Boot_Websocket](https://img.shields.io/badge/Spring_Boot_Websocket-v2.1.5-green.svg?logo=spring)
+![Spring_Security](https://img.shields.io/badge/Spring_Cloud_Security-v2.1.5-green.svg?logo=spring)
+![Spring_Freemarker](https://img.shields.io/badge/Freemarker-v2.1.5-blue.svg)
+![Vuejs](https://img.shields.io/badge/vue.js-v2.5.16-blue.svg?logo=vue.js)
 ![GitHub stars](https://img.shields.io/github/stars/codej99/SpringOauth2AuthorizationServer?style=social)
 
 # SpringBoot + Websocket을 이용한 채팅 서버 구축 
